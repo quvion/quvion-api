@@ -14,7 +14,7 @@ class quvion
 
     function confirmSubscription($confirmationKey, $ipOpt, $timestampOpt)
     {
-        $url =   $this->domain."/api/v2/subscriptions/confirm/" .$confirmationKey;
+        $url = $this->domain . "/api/v2/subscriptions/confirm/" . $confirmationKey;
 
         $data = array(
             "ipOptIn" => $ipOpt,
@@ -25,7 +25,7 @@ class quvion
 
         $options = array(
             'http' => array(
-                'header' => "Content-type: application/x-www-form-urlencoded\r\nAuthorization: Basic ". base64_encode("user:".$this->apiKey),
+                'header' => "Content-type: application/x-www-form-urlencoded\r\nAuthorization: Basic " . base64_encode("user:" . $this->apiKey),
                 'method' => 'POST',
                 'content' => $jsonDataEncoded
             )
@@ -34,6 +34,18 @@ class quvion
         return $this->createHttpRequest($url, $options);
     }
 
+    function unsubscribe($key1, $key2)
+    {
+        $url = $this->domain . "/api/v2/subscriptions/unsubscribe/" . $key1 . "_" . urlencode($key2);
+        $options = array(
+            'http' => array(
+                'header' => "Content-type: application/x-www-form-urlencoded\r\nAuthorization: Basic " . base64_encode("user:" . $this->apiKey),
+                'method' => 'GET',
+            )
+        );
+
+        return $this->createHttpRequest($url, $options);
+    }
 
     function createHttpRequest($url, $options)
     {
